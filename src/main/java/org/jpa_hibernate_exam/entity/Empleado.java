@@ -2,12 +2,10 @@ package org.jpa_hibernate_exam.entity;
 
 import jakarta.persistence.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
+
 
 
 @Entity
@@ -32,9 +30,8 @@ public class Empleado {
 
     public Empleado(Integer empNo, String apellido, String oficio, Integer dir, LocalDate fechaAlt, Float salario, Float comision, Integer deptNo) {
        try {
-           DateTimeFormatter dtformat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
            this.fechaAlt = fechaAlt;
-           this.fechaAlt.format(dtformat);
+
        }catch (DateTimeParseException e){
            System.err.println("Error al analizar la fecha: "+e.getMessage());
        }
@@ -85,9 +82,7 @@ public class Empleado {
 
     public void setFechaAlt(LocalDate fechaAlt) {
         try {
-            DateTimeFormatter dtformat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             this.fechaAlt = fechaAlt;
-            this.fechaAlt.format(dtformat);
         }catch (DateTimeParseException e){
             System.err.println("Error al analizar la fecha: "+e.getMessage());
         }
@@ -119,12 +114,13 @@ public class Empleado {
 
     @Override
     public String toString() {
+        DateTimeFormatter dtformat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return
                 "empNo: " + empNo +
                 ", apellido: " + apellido +
                 ", oficio: " + oficio  +
                 ", dir: " + dir +
-                ", fechaAlt: " + fechaAlt +
+                ", fechaAlt: " + fechaAlt.format(dtformat) +
                 ", salario: " + salario +
                 ", comision: " + comision +
                 ", deptNo: " + deptNo;
