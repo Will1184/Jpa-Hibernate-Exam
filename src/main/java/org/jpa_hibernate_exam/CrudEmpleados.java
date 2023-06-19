@@ -6,6 +6,8 @@ import org.jpa_hibernate_exam.service.EmpleadoService;
 import org.jpa_hibernate_exam.service.EmpleadoServiceImpl;
 import org.jpa_hibernate_exam.util.JpaUtil;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +33,7 @@ public class CrudEmpleados {
         empleado.setApellido("GOMEZ");
         empleado.setOficio("VENDEDOR");
         empleado.setDir(7698);
-        empleado.setFechaAlt("1996-1-17");
+        empleado.setFechaAlt(LocalDate.of(1992, Month.APRIL,25));
         empleado.setSalario(1500.00F);
         empleado.setComision(300F);
         empleado.setDeptNo(30);
@@ -56,5 +58,6 @@ public class CrudEmpleados {
         });
         //Cierra la sesion a base de datos
         manager.close();
+
     }
 }

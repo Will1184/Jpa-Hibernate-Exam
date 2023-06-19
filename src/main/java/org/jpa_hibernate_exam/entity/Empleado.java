@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 
@@ -17,21 +20,28 @@ public class Empleado {
     private String oficio;
     private Integer dir;
     @Column(name = "fecha_alt")
-    private String fechaAlt;
+    private LocalDate fechaAlt;
     private Float salario;
     private Float comision;
     @Column(name = "dept_no")
     private  Integer deptNo;
 
+
     public Empleado() {
     }
 
-    public Empleado(Integer empNo, String apellido, String oficio, Integer dir, String fechaAlt, Float salario, Float comision, Integer deptNo) {
+    public Empleado(Integer empNo, String apellido, String oficio, Integer dir, LocalDate fechaAlt, Float salario, Float comision, Integer deptNo) {
+       try {
+           DateTimeFormatter dtformat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+           this.fechaAlt = fechaAlt;
+           this.fechaAlt.format(dtformat);
+       }catch (DateTimeParseException e){
+           System.err.println("Error al analizar la fecha: "+e.getMessage());
+       }
         this.empNo = empNo;
         this.apellido = apellido;
         this.oficio = oficio;
         this.dir = dir;
-        this.fechaAlt = fechaAlt;
         this.salario = salario;
         this.comision = comision;
         this.deptNo = deptNo;
@@ -69,13 +79,18 @@ public class Empleado {
         this.dir = dir;
     }
 
-    public String getFechaAlt() {
+    public LocalDate getFechaAlt() {
         return fechaAlt;
     }
 
-    public void setFechaAlt(String fechaAlt) {
-
-        this.fechaAlt = fechaAlt;
+    public void setFechaAlt(LocalDate fechaAlt) {
+        try {
+            DateTimeFormatter dtformat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            this.fechaAlt = fechaAlt;
+            this.fechaAlt.format(dtformat);
+        }catch (DateTimeParseException e){
+            System.err.println("Error al analizar la fecha: "+e.getMessage());
+        }
     }
 
     public Float getSalario() {
@@ -109,7 +124,7 @@ public class Empleado {
                 ", apellido: " + apellido +
                 ", oficio: " + oficio  +
                 ", dir: " + dir +
-                ", fechaAlt: " + getFechaAlt() +
+                ", fechaAlt: " + fechaAlt +
                 ", salario: " + salario +
                 ", comision: " + comision +
                 ", deptNo: " + deptNo;
